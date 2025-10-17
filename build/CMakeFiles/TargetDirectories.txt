@@ -1,0 +1,4 @@
+/root/web_chat/text/build/CMakeFiles/edit_cache.dir
+/root/web_chat/text/build/CMakeFiles/rebuild_cache.dir
+/root/web_chat/text/build/src/CMakeFiles/edit_cache.dir
+/root/web_chat/text/build/src/CMakeFiles/rebuild_cache.dir
