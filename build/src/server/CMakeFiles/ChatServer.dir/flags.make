@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/root/web_chat/text/$(PROJECCT_SOURCE_DIR)/include -I/root/web_chat/text/$(PROJECCT_SOURCE_DIR)/include/server
+CXX_INCLUDES = -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include/server -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/thirdpart
 
 CXX_FLAGS = -g
 
