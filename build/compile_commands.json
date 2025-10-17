@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/root/web_chat/text/build/src/server",
+  "command": "/usr/bin/c++  -I/root/web_chat/text/$(PROJECCT_SOURCE_DIR)/include -I/root/web_chat/text/$(PROJECCT_SOURCE_DIR)/include/server -g -o CMakeFiles/ChatServer.dir/chatserver.cpp.o -c /root/web_chat/text/src/server/chatserver.cpp",
+  "file": "/root/web_chat/text/src/server/chatserver.cpp",
+  "output": "src/server/CMakeFiles/ChatServer.dir/chatserver.cpp.o"
+},
+{
+  "directory": "/root/web_chat/text/build/src/server",
+  "command": "/usr/bin/c++  -I/root/web_chat/text/$(PROJECCT_SOURCE_DIR)/include -I/root/web_chat/text/$(PROJECCT_SOURCE_DIR)/include/server -g -o CMakeFiles/ChatServer.dir/main.cpp.o -c /root/web_chat/text/src/server/main.cpp",
+  "file": "/root/web_chat/text/src/server/main.cpp",
+  "output": "src/server/CMakeFiles/ChatServer.dir/main.cpp.o"
+}
+]
