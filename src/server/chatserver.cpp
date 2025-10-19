@@ -1,4 +1,5 @@
 #include "server/ChatServer.hpp"
+#include"Chatservice.hpp"
 #include "json.hpp"
 #include <iostream>
 #include <functional>
@@ -37,12 +38,15 @@ void ChatServer::onConnection(const TcpConnectionPtr &coon)
 // 上报读写事件相关的回调函数
 void ChatServer::onMessage(const TcpConnectionPtr &conn,
                            Buffer *buffer,
-                           Timestamp)
+                           Timestamp time)
 {
     string buf=buffer->retrieveAllAsString();
     //数据的反序列化
     json js=json::parse(buf);
     //达到目的：完全解读网络模块的代码和业务模块的代码
-    //通过js读出的message id 获取业务处理器=》coon js time
+    //通过js读出的message id 获取业务处理器=》coon js time 
+    auto msgHandler=ChatService::instance()->getHandler(js["msgid"].get<int>());
+    //回调消息绑定好的事件处理器，来执行对应的业务
+    msgHandler(conn,js,time);
 
 }
