@@ -19,6 +19,12 @@
 },
 {
   "directory": "/root/web_chat/text/build/src/server",
+  "command": "/usr/bin/c++  -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include/server -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include/server/db -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/thirdpart -g -o CMakeFiles/ChatServer.dir/usermodel.cpp.o -c /root/web_chat/text/src/server/usermodel.cpp",
+  "file": "/root/web_chat/text/src/server/usermodel.cpp",
+  "output": "src/server/CMakeFiles/ChatServer.dir/usermodel.cpp.o"
+},
+{
+  "directory": "/root/web_chat/text/build/src/server",
   "command": "/usr/bin/c++  -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include/server -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include/server/db -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/thirdpart -g -o CMakeFiles/ChatServer.dir/db/db.cpp.o -c /root/web_chat/text/src/server/db/db.cpp",
   "file": "/root/web_chat/text/src/server/db/db.cpp",
   "output": "src/server/CMakeFiles/ChatServer.dir/db/db.cpp.o"

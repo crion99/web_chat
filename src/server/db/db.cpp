@@ -1,48 +1,58 @@
-#include"db.h"
+#include "db.h"
 // 数据库配置信息
 static string server = "127.0.0.1";
 static string user = "root";
-static string password = "123546";
+static string password = "123456";
 static string dbname = "chat";
 // 初始化数据库的连接
-MySQL:: MySQL()
-    {
-        _conn = mysql_init(nullptr);
-    }
+MySQL::MySQL()
+{
+    _conn = mysql_init(nullptr);
+}
 // 释放数据库连接资源
 MySQL::~MySQL()
-     {
-        if (_conn != nullptr)
-            mysql_close(_conn);
-    }
+{
+    if (_conn != nullptr)
+        mysql_close(_conn);
+}
 // 连接数据库
-bool MySQL:: connect()
+bool MySQL::connect()
+{
+    MYSQL *p = mysql_real_connect(_conn, server.c_str(), user.c_str(),
+                                  password.c_str(), dbname.c_str(), 3306, nullptr, 0);
+    if (p != nullptr)
     {
-        MYSQL *p = mysql_real_connect(_conn, server.c_str(), user.c_str(),
-                                      password.c_str(), dbname.c_str(), 3306, nullptr, 0);
-        if (p != nullptr)
-        {
-            mysql_query(_conn, "ste names gdk");
-        }
-        return p;
+        mysql_query(_conn, "set names gdk");
+        LOG_INFO << "connect mysql success!";
     }
+    else
+    {
+        LOG_INFO << "connect mysql fail!";
+    }
+    return p;
+}
 // 更新操作
-bool MySQL:: update(string sql)
+bool MySQL::update(string sql)
+{
+    if (mysql_query(_conn, sql.c_str()))
     {
-        if (mysql_query(_conn, sql.c_str()))
-        {
-            LOG_INFO<<__FILE__<<":"<<__LINE__<<":"<< sql <<"更新失败！";
-            return false;
-        }
-        return true;
+        LOG_INFO << __FILE__ << ":" << __LINE__ << ":" << sql << "更新失败！";
+        return false;
     }
- //查询操作
-MYSQL_RES* MySQL::query(string sql)
+    return true;
+}
+// 查询操作
+MYSQL_RES *MySQL::query(string sql)
+{
+    if (mysql_query(_conn, sql.c_str()))
     {
-        if(mysql_query(_conn,sql.c_str()))
-        {
-            LOG_INFO<<__FILE__<<":"<<__LINE__<<":"<<sql<<"查询失败";
-            return nullptr;
-        }
-        return mysql_use_result(_conn);
+        LOG_INFO << __FILE__ << ":" << __LINE__ << ":" << sql << "查询失败";
+        return nullptr;
     }
+    return mysql_use_result(_conn);
+}
+// 获取连接
+MYSQL *MySQL::getConnection()
+{
+    return _conn;
+}

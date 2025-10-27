@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <functional>
 #include "json.hpp"
+#include"usermodel.hpp"
 using namespace std;
 using namespace muduo;
 using namespace muduo::net;
@@ -28,5 +29,8 @@ private:
    ChatService();
    // 储存消息id和其对应的业务处理方法
    unordered_map<int, MsgHandler> _msgHandlerMap;
+
+   //数据操作类对象
+    UserModel _userModel;
 };
 #endif

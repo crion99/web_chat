@@ -22,9 +22,9 @@ MsgHandler ChatService::getHandler(int msgid)
     if (it == _msgHandlerMap.end())
     {
         // 返回一个默认的处理器，空操作
-        return [=](const TcpConnectionPtr &conn, json &js, Timestamp) {
-            LOG_ERROR<<"msgid"<<msgid<<"can not find handler!";
-
+        return [=](const TcpConnectionPtr &conn, json &js, Timestamp)
+        {
+            LOG_ERROR << "msgid" << msgid << "can not find handler!";
         };
     }
     else
@@ -35,11 +35,33 @@ MsgHandler ChatService::getHandler(int msgid)
 // 登录业务
 void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time)
 {
-    
-    LOG_INFO<<"do login service!!!";
+
+    LOG_INFO << "do login service!!!";
 }
 // 注册业务
 void ChatService::reg(const TcpConnectionPtr &conn, json &js, Timestamp time)
 {
-    LOG_INFO<<"do reg service!!!";
+    string name = js["name"];
+    string pwd = js["password"];
+    User user;
+    user.setName(name);
+    user.setPwd(pwd);
+    bool state = _userModel.insert(user);
+    if (state)
+    {
+        // 注册成功
+        json response;
+        response["msgid"] = REG_MSG_ACK;
+        response["error"] = 0;
+        response["id"] = user.getId();
+        conn->send(response.dump());
+    }
+    else
+    {
+        // 注册失败
+        json response;
+        response["msgid"] = REG_MSG_ACK;
+        response["error"] = 1;
+        conn->send(response.dump());
+    }
 }

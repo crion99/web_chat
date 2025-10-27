@@ -337,4 +337,6 @@ src/server/CMakeFiles/ChatServer.dir/chatserver.cpp.o: \
  /usr/include/c++/13/optional /usr/include/c++/13/numeric \
  /usr/include/c++/13/bits/stl_numeric.h \
  /usr/include/c++/13/pstl/glue_numeric_defs.h /usr/include/c++/13/any \
+ /root/web_chat/text//include/server/usermodel.hpp \
+ /root/web_chat/text//include/server/user.hpp \
  /usr/include/c++/13/iostream
