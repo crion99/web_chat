@@ -2,7 +2,7 @@
 // 数据库配置信息
 static string server = "127.0.0.1";
 static string user = "root";
-static string password = "123456";
+static string password = "Luliuzhen@123";
 static string dbname = "chat";
 // 初始化数据库的连接
 MySQL::MySQL()
@@ -22,12 +22,12 @@ bool MySQL::connect()
                                   password.c_str(), dbname.c_str(), 3306, nullptr, 0);
     if (p != nullptr)
     {
-        mysql_query(_conn, "set names gdk");
+        mysql_query(_conn, "set names gbk");
         LOG_INFO << "connect mysql success!";
     }
     else
     {
-        LOG_INFO << "connect mysql fail!";
+         LOG_INFO << "connect mysql fail! reason: " << mysql_error(_conn);//LOG_INFO << "connect mysql fail!";
     }
     return p;
 }
@@ -36,8 +36,9 @@ bool MySQL::update(string sql)
 {
     if (mysql_query(_conn, sql.c_str()))
     {
-        LOG_INFO << __FILE__ << ":" << __LINE__ << ":" << sql << "更新失败！";
-        return false;
+         LOG_INFO << __FILE__ << ":" << __LINE__ << ":" << sql 
+              << " 更新失败! 错误信息: " << mysql_error(_conn);
+              return false;
     }
     return true;
 }
