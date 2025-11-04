@@ -1,8 +1,10 @@
 #include "Chatservice.hpp"
 #include "public.hpp"
+#include"usermodel.hpp"
 #include <string>
 #include "muduo/base/Logging.h"
 #include <vector>
+#include<iostream>
 using namespace std;
 using namespace muduo;
 // 获取单例对象的接口函数
@@ -18,6 +20,14 @@ ChatService::ChatService()
     _msgHandlerMap.insert({REG_MSG, std::bind(&ChatService::reg, this, _1, _2, _3)});
     _msgHandlerMap.insert({ONE_CHAT_MSG, std::bind(&ChatService::oneChat, this, _1, _2, _3)});
 }
+// 服务器异常后，业务重置方法
+void ChatService::reset()
+{
+    // 把online状态的用户设置为offline
+    _userModel.resetState();
+    
+}
+// 获取消息对应的处理器
 MsgHandler ChatService::getHandler(int msgid)
 {
     // 记录错误日志，msgid没有对应的事件处理回调
@@ -38,6 +48,7 @@ MsgHandler ChatService::getHandler(int msgid)
 // 登录业务id pwd pwd
 void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time)
 {
+  
     int id = js["id"].get<int>();
     string pwd = js["password"];
     User user = _userModel.query(id);
@@ -70,13 +81,12 @@ void ChatService::login(const TcpConnectionPtr &conn, json &js, Timestamp time)
             response["error"] = 0;
             response["id"] = user.getId();
             response["name"] = user.getName();
-            conn->send(response.dump());
             // 查询该用户是否有离线消息
             vector<string> vec = _offlineMsgModel.query(id);
             if (!vec.empty())
             {
-                response["offlinemsg"]=vec;
-                //读取后，删除离线消息
+                response["offlinemsg"] = vec;
+                // 读取后，删除离线消息
                 _offlineMsgModel.remove(id);
             }
             conn->send(response.dump());

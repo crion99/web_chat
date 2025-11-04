@@ -31,7 +31,7 @@ vector<string> OfflineMsgModel::query(int userid)
 {
     // 1.组装sql语句
     char sql[1024] = {0};
-    sprintf(sql, "select * from offlinemessage where userid=%d", userid);
+    sprintf(sql, "select message from offlinemessage where userid=%d", userid);
 
     vector<string> vec;
     MySQL mysql;
@@ -40,6 +40,7 @@ vector<string> OfflineMsgModel::query(int userid)
         MYSQL_RES *res = mysql.query(sql);
         if (res != nullptr)
         {
+
 
             // 把userid用户的所有离线消息放入vec中返回
             MYSQL_ROW row;

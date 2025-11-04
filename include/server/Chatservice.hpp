@@ -32,6 +32,8 @@ public:
    
    //处理客户端异常退出
    void clientCloseException(const TcpConnectionPtr &conn);
+   //服务器异常后，业务重置方法
+   void reset();
 private:
    ChatService();
    // 储存消息id和其对应的业务处理方法
