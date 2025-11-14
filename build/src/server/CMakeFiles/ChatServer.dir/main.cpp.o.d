@@ -337,9 +337,13 @@ src/server/CMakeFiles/ChatServer.dir/main.cpp.o: \
  /usr/include/c++/13/optional /usr/include/c++/13/numeric \
  /usr/include/c++/13/bits/stl_numeric.h \
  /usr/include/c++/13/pstl/glue_numeric_defs.h /usr/include/c++/13/any \
- /root/web_chat/text//include/server/usermodel.hpp \
- /root/web_chat/text//include/server/user.hpp \
- /root/web_chat/text//include/server/offlinemessagemodel.hpp \
+ /root/web_chat/text//include/server/model/usermodel.hpp \
+ /root/web_chat/text//include/server/model/user.hpp \
+ /root/web_chat/text//include/server/model/offlinemessagemodel.hpp \
+ /root/web_chat/text//include/server/model/friendmodel.hpp \
+ /root/web_chat/text//include/server/model/groupmodel.hpp \
+ /root/web_chat/text//include/server/model/group.hpp \
+ /root/web_chat/text//include/server/model/groupuser.hpp \
  /usr/include/c++/13/mutex /usr/include/c++/13/bits/std_mutex.h \
  /usr/include/c++/13/bits/unique_lock.h /usr/include/c++/13/iostream \
  /usr/include/signal.h \
