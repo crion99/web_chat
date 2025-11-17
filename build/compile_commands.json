@@ -46,5 +46,11 @@
   "command": "/usr/bin/c++  -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include/server -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include/server/db -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include/server/model -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/thirdpart -g -o CMakeFiles/ChatServer.dir/model/usermodel.cpp.o -c /root/web_chat/text/src/server/model/usermodel.cpp",
   "file": "/root/web_chat/text/src/server/model/usermodel.cpp",
   "output": "src/server/CMakeFiles/ChatServer.dir/model/usermodel.cpp.o"
+},
+{
+  "directory": "/root/web_chat/text/build/src/client",
+  "command": "/usr/bin/c++  -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include/server -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include/server/db -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/include/server/model -I/root/web_chat/text/$(PROJECT_SOURCE_DIR)/thirdpart -g -o CMakeFiles/ChatClient.dir/main.cpp.o -c /root/web_chat/text/src/client/main.cpp",
+  "file": "/root/web_chat/text/src/client/main.cpp",
+  "output": "src/client/CMakeFiles/ChatClient.dir/main.cpp.o"
 }
 ]
