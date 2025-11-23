@@ -26,6 +26,11 @@ vector<User> g_currentUserFriendList;
 vector<Group> g_currentUserGroupList;
 // 显示当前登录成功用户的基本信息
 void showCurrentUserData();
+
+//控制聊天页面显示
+bool isMainMenuRunning = false;
+
+
 // 接受线程
 void readTaskHandler(int clientfd);
 
@@ -123,6 +128,7 @@ int main(int argc, char **argv)
                     }
                     else // 登录成功
                     {
+                        cout<< "login success!" << endl;
                         // 记录当前用户的id和name
                         g_currentUser.setId(responsejs["id"].get<int>());
                         g_currentUser.setName(responsejs["name"]);
@@ -130,6 +136,8 @@ int main(int argc, char **argv)
                         // 记录当前用户的好友列表消息
                         if (responsejs.contains("friends"))
                         {
+                            //初始化
+                            g_currentUserFriendList.clear();
                             vector<string> vec = responsejs["friends"];
                             for (string &str : vec)
                             {
@@ -145,6 +153,8 @@ int main(int argc, char **argv)
                         // 记录当前用户的群组列表信息
                         if (responsejs.contains("groups"))
                         {
+                            //初始化
+                            g_currentUserGroupList.clear();
                             vector<string> vec1 = responsejs["groups"];
                             for (string &groupstr : vec1)
                             {
@@ -175,12 +185,11 @@ int main(int argc, char **argv)
                         // 显示当前用户的离线消息
                         if (responsejs.contains("offflinemsg"))
                         {
-                            vector<string> vec = responsejs["offlienmsg"];
+                            vector<string> vec = responsejs["offlinemsg"];
                             for (string &str : vec)
                             {
                                 json js = json::parse(str);
                                 // time+[id]+name+"said:"+xxx
-                                json js = json::parse(buffer);
                                 // 接收chatserver转发的数据，包括其他用户发来的聊天消息，服务器推送的群消息
                                 int msgtype = js["msgid"].get<int>();
                                 if (ONE_CHAT_MSG == msgtype)
@@ -196,10 +205,16 @@ int main(int argc, char **argv)
 
                             }
                         }
-                        // 登录成功，启动接受线程负责接受数据
+                        // 登录成功，启动接受线程负责接受数据， 指启动一次
+                        static int readthreadNumber=0;
+                        if(readthreadNumber==0)
+                        {
                         std::thread readTask(readTaskHandler, clientfd);
                         readTask.detach();
+                        readthreadNumber++;     
+                        }
                         // 进入聊天主菜单页面
+                        isMainMenuRunning = true;
                         mainMenu(clientfd);
                     }
                 }
@@ -248,6 +263,7 @@ int main(int argc, char **argv)
                     }
                 }
             }
+            break;
         }
         case (0): // 退出业务
         {
@@ -264,10 +280,10 @@ int main(int argc, char **argv)
 // 接受线程
 void readTaskHandler(int clientfd)
 {
-    for (;;)
+    for(;;)
     {
         char buffer[1024] = {0};
-        int len = recv(clientfd, buffer, 1024, 0);
+        int len = recv(clientfd, buffer, 1024, 0);//阻塞了
         if (-1 == len || 0 == len)
         {
             close(clientfd);
@@ -330,10 +346,10 @@ unordered_map<string, function<void(int, string)>> commandHandlerMap{
 // 主聊天页面程序
 void mainMenu(int clientfd)
 {
-    help();
+    help(0,"");
 
     char buffer[1024] = {};
-    for (;;)
+    while (isMainMenuRunning)
     {
 
         cin.getline(buffer, 1024);
@@ -480,8 +496,23 @@ void groupchat(int clientfd, string str)
     }
 }
 // "quit" command handler
-void quit(int, string)
+void quit(int clientfd, string str)
 {
+    json js;
+    js["msgid"] = LOGINOUT_MSG;
+    js["id"] = g_currentUser.getId();
+    string buffer = js.dump();
+
+    int len = send(clientfd, buffer.c_str(), strlen(buffer.c_str()) + 1, 0);
+    if (len == -1)
+    {
+        cerr << "send quit msg error:" << buffer << endl;
+    }
+    else
+    {
+        cout << "you have quit the system!" << endl;
+        isMainMenuRunning = false;
+    }
 }
 
 // 显示当前登录成功用户的基本信息
